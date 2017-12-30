@@ -13,8 +13,6 @@ export default class App extends React.Component {
   submitClick()
   {
     alert('submit clicked');
-    this.setState({username : 'Test User'});
-    // this.setState({username:this.state.username})
     //this.getMoviesFromApiAsync();
     this.login();
   }
@@ -32,6 +30,8 @@ export default class App extends React.Component {
 
   login()
   {
+    console.log(this.state.username);
+    console.log(this.state.pwd);
     fetch('http://192.168.0.15:8080/login', {
       method: 'POST',
       headers: {
@@ -39,8 +39,8 @@ export default class App extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "username": "test",
-        "password": "test"
+        "username": this.state.username,
+        "password": this.state.pwd
       }),
     })
     .then((response) => response.json())
@@ -74,7 +74,6 @@ export default class App extends React.Component {
             onChangeText={(pwd) => this.setState({pwd})}
           />
         </View>
-        <Text>{this.state.username}</Text>
         <View>
           <Button
             onPress={this.submitClick }
