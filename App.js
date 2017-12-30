@@ -7,6 +7,7 @@ export default class App extends React.Component {
     this.state = {username: '', pwd: '', btnPressed: 0};
     this.submitClick = this.submitClick.bind(this);
     this.getMoviesFromApiAsync = this.getMoviesFromApiAsync.bind(this);
+    this.login = this.login.bind(this);
   }
 
   submitClick()
@@ -14,7 +15,8 @@ export default class App extends React.Component {
     alert('submit clicked');
     this.setState({username : 'Test User'});
     // this.setState({username:this.state.username})
-    this.getMoviesFromApiAsync();
+    //this.getMoviesFromApiAsync();
+    this.login();
   }
 
   getMoviesFromApiAsync() {
@@ -26,6 +28,28 @@ export default class App extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  login()
+  {
+    fetch('http://192.168.0.15:8080/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "username": "test",
+        "password": "test"
+      }),
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      console.log(responseJson);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
   render() {
